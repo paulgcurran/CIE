@@ -1,0 +1,10 @@
+Package: CIE
+Type: Package
+Title: Careless/Insufficient Effort Responding Statistics
+Version: 1.0
+Date: 2015-05-07
+Author: Paul G. Curran
+Maintainer: Paul G. Curran <paul.g.curran@gmail.com>
+Description: Produces a number of the most common careless/insufficient
+	effort statistics from response data on polytomous self-report measures.  
+License: GPL-3
