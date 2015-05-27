@@ -14,8 +14,9 @@
 
 
 
-# function 12 - long strings, longest string of each response
+####function 12 - long strings, longest string of each response
 
+##creating copy dataset for use in running all functions at once
 longStringFull<-function(Data1){
   x<-exists("Data2")
   if(x==FALSE){
@@ -23,19 +24,23 @@ longStringFull<-function(Data1){
   }
   rm(x)
 
-# set number of items from the dimensions of the input file
+##set number of items from the dimensions of the input file
 dim<-dim(Data1)
 nItems<-dim[2]
 persons<-dim[1]
+##find low end response
 minR<-min(Data1,na.rm = TRUE)
+##find high end response
 maxR<-max(Data1,na.rm = TRUE)
+##find number of responses to check
 kPractical<-maxR-minR+1
 #rm(longString)
 longString<-data.frame(matrix(nrow=persons))
 #namesV<-c("longStringA","longStringB","longStringC","longStringD","longStringE","longStringF","longStringG","longStringH","longStringI")
 
 
-#building the necessary vectors based on number of response options
+##building the necessary vectors based on number of response options
+##prints errors if only one or more than nine response categories
 
 if (kPractical==1){
   print("There is only one response in the data, this isn't going to end well.")
@@ -71,16 +76,21 @@ if (kPractical>1){
 
 longStringVal<-longString[-1]
 rm(longString)
+##creating another dataset with recoded NA values
 Data3<-Data1
 Data3[is.na(Data3)==TRUE]<-(-99)
 #Data3<<-Data3
 
-# now have a matrix that just needs to be populated by series of for loops
+##now have a matrix that just needs to be populated by series of for loops
 
 nItemsR<-nItems-1
 x<-0
 countV<-0
 responseList<-NULL
+
+##outer loop to iterate over response options
+##inner loop to iterate over people
+##loop within people to run through items
 
 for (r in minR:maxR){
   countV<-countV+1
@@ -120,9 +130,10 @@ for (r in minR:maxR){
   }
 }
 
+##attaches values to original data, but does not return at moment
 Data2<-cbind(Data2,longStringVal)
 
-
+##return values to be stored by user
 return(longStringVal)
 
 
@@ -136,7 +147,7 @@ return(longStringVal)
 
 # generate histogram of calculated values
 
-
+##cleaning leftover variables
 rm(dim,k,length,nItems,nItemsR,persons,x,countV,kPractical,longLength,maxR,minR,r,responseList,Data3)
 
 }
