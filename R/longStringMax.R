@@ -12,7 +12,9 @@
 #' longStringMax(values)
 
 
-# function 11 - long strings, longest string and response
+##function 11 - long strings, longest string and response
+
+##creating copy dataset for use in running all functions at once
 
 longStringMax<-function(Data1){
   x<-exists("Data2")
@@ -21,35 +23,44 @@ longStringMax<-function(Data1){
   }
   rm(x)
 
-# set number of items from the dimensions of the input file
+##set number of items from the dimensions of the input file
 dim<-dim(Data1)
 nItems<-dim[2]
 persons<-dim[1]
+##creating variables to be populated
 longResponse<-NULL
 Data2$longLength<-NULL
 Data2$longResponse<-NULL
 nItemsR<-nItems-1
 x<-0
 
+##creating file to work with to account for NA
 Data3<-Data1
 Data3[is.na(Data3)==TRUE]<-(-99)
 
+##outer loop to iterate over people
+##inner loop to generate values
+
 for (x in 1:persons){
   
+##minimum value this can ever be is 1  
   longLength<-1
   length<-1
   
   for (k in 1:nItemsR){
     
+##checking if adjacent values are the same, iterating    
     if (Data3[x,k]==Data3[x,k+1]){
       response<-Data3[x,k]
       length<-length+1
     } 
+##if values are differnet need to restart counting    
     else {
       if (length>longLength) {
         longLength<-length
         longResponse<-response
       } 
+##if current cycle longer than prior, writes to current value      
       if (k==nItemsR){
         if (length>longLength) {
           longLength<-length
@@ -60,6 +71,7 @@ for (x in 1:persons){
     }
   }
   
+##some cleaning and storing from earlier versions
   Data2$longLength[x]<-longLength
   Data2$longResponse[x]<-longResponse
   #Data2$longLength[x]<<-longLength
@@ -73,15 +85,17 @@ for (x in 1:persons){
 # generate basic stats of person total correlations
 summary(Data2$longLength)
 summary(Data2$longResponse)
-# generate histogram of calculated values
+##generate histogram of calculated values
 hist(Data2$longLength, breaks=10, col="blue")
 hist(Data2$longResponse, breaks=10, col="blue")
 
+##generate scores to return, user can store as values
 longLength<-Data2$longLength
 longResponse<-Data2$longResponse
 vals<-list(longLength,longResponse)
 return(vals)
 
+##cleaning remaining variables
 rm(dim,k,length,nItems,nItemsR,persons,response,x)
 
 
