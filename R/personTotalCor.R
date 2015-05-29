@@ -12,8 +12,9 @@
 #' personTotalCor(values)
 
 
-########## function 1- person total correlations
+##function 1- person total correlations
 
+##creating data file if one doesn't exist for full version
 
 personTotalCor<-function(Data1){
   x<-exists("Data2")
@@ -24,11 +25,14 @@ personTotalCor<-function(Data1){
   #  DataR<-Data1
   #}
   rm(x)
+  ##old code to run this through psychometric package
+  ##new code runs independent of other packages but needs testing
   #install.packages("psych")
   #library(psych)
   #install.packages("psychometric")
   #library(psychometric)
   
+  ##finding number of items and number of people
   dimen<-dim(Data1)
   nItems<-dimen[2]
   nPeople<-dimen[1]
@@ -36,7 +40,7 @@ personTotalCor<-function(Data1){
   sumData1<-NULL
   personTotal<-NULL
   
-  
+  ##creating values of sum scores for each item
   while (x<nItems) {
     x<-x+1;
     sumData1[x]<-sum(Data1[,x],na.rm = TRUE);
@@ -44,6 +48,8 @@ personTotalCor<-function(Data1){
   
   rm(x)
   
+  ##running correlation for each person
+  ##this is corrected person-total through subtraction of own score
   for (i in 1:nPeople) {
     person<-t(Data1[i,]);
     others<-(sumData1-person);
@@ -51,6 +57,7 @@ personTotalCor<-function(Data1){
     rm(person,others);
   }
   
+  ##general cleaning
   rm(nItems,nPeople,sumData1)
   # transpose original item by person matrix
   #tData1<-t(Data1)
@@ -62,11 +69,12 @@ personTotalCor<-function(Data1){
   Data2$personTotal<-personTotal
   #rm(modelITCor,personTotal,tData1)
   
+  ##returns values that can be stored by user
   return(personTotal)
   
-  # generate basic stats of person total correlations
+  ##generate basic stats of person total correlations
   summary(Data2$personTotal)
-  # generate histogram of calculated values
+  ##generate histogram of calculated values
   hist(Data2$personTotal, breaks=50, col="blue")
   #print(Data2)
   
