@@ -90,6 +90,8 @@ hist(Data2$longLength, breaks=10, col="blue")
 hist(Data2$longResponse, breaks=10, col="blue")
 
 ##generate scores to return, user can store as values
+longLength<-NULL
+longResponse<-NULL
 longLength<-Data2$longLength
 longResponse<-Data2$longResponse
 vals<-list(longLength,longResponse)
