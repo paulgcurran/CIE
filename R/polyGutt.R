@@ -12,7 +12,9 @@
 #' polyGutt(values)
 
 
-# function 9 - polytomous Guttman errors
+##function 9 - polytomous Guttman errors
+
+##creating files if they don't exist
 
 polyGutt<-function(Data1){
   x<-exists("Data2")
@@ -21,7 +23,7 @@ polyGutt<-function(Data1){
   }
   rm(x)
 
-# set number of items from the dimensions of the input file
+##set number of items from the dimensions of the input file
 dim<-dim(Data1)
 nItems<-dim[2]
 #nItems<-50
@@ -30,15 +32,20 @@ meanData1<-NULL
 
 
 #need to go through and change to k in i and x in j
+##believe that above is completed?
+
 dim<-dim(Data1)
 y<-dim[2]
 x<-0
 
+##creating a list of item means for sorting
 while (x<y) {
   x<-x+1;
   meanData1[x]<-mean(Data1[,x],na.rm = TRUE);
 }
 
+##creating order of items from highest to lowest
+##highest means should be 'easiest' items
 meanOrder<-order(meanData1,decreasing=FALSE)
 
 j<-dim[1]
@@ -46,6 +53,9 @@ y<-dim[2]
 x<-0
 z<-0
 gOrder<-data.frame(matrix(NA,nrow=j,ncol=y))
+
+##outer loop to iterate over people
+##inner loop to build guttman sorted file
 while (x<j) {
   x<-x+1
   personOrder<-NULL
@@ -58,6 +68,9 @@ while (x<j) {
   gOrder[x,]<-personOrder
   rm(personOrder)
 } 
+
+##outer loop to iterate over people
+##inner loop to count errors in guttman scaling
 
 x<-0
 while (x<j) {
@@ -95,7 +108,7 @@ while (x<j) {
   rm(gErrors)
 }
 
-
+##old code for display
 # display data file with appended data
 #Data2
 # generate basic stats of person total correlations
@@ -103,7 +116,7 @@ summary(Data2$gErrors)
 # generate histogram of calculated values
 hist(Data2$gErrors, breaks=50, col="blue")
 
-#generate proportional Guttman errors (corrects for missingness)
+##generate proportional Guttman errors (corrects for missingness)
 dim<-dim(Data1)
 nPeople<-dim[1]
 nItems<-dim[2]
@@ -118,8 +131,14 @@ for (b in 1:nPeople) {
 gErrors<-Data2$gErrors
 propGuttErrors<-Data2$propGuttErrors
 vals<-list(gErrors,propGuttErrors)
-return(vals)
+##returns values for user to store
+return(gErrors)
+##currently only outputting raw count of errors
+##remove comments below to output proportion or list
+#return(propGuttErrors)
+#return(vals)
 
+##cleaning remaining variables
 rm(nPeople)
 rm(gOrder,dim,i,j,k,meanData1,meanOrder,x,y,z,nItems,b)
 }
