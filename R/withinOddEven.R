@@ -35,21 +35,31 @@ withinOddEven<-function(Data1){
   }
   
   ##building sequences of numbers
+  ##currently assumes situation where each scale is assessed 
+    ##by two adjacent items
+  ##need to program initial input so that user can provide each scale
+  
   oddItems<-seq(1,nItems,2)
   evenItems<-seq(2,nItems,2)
   ##building constraints for while loop
   #dim<-dim(Data1)
   persons<-dim[1]
   x<-0
+  ##currently does not build scale scores, but needs to
+    ##works at moment only on two item scales
+  
+  ##need to write code to populate vectors of scale means
+  
   ##creating empty variable to be filled by while loop
   Data2$coefOddEven<-NULL
   
   ##iteratively computing calculation within each person, populating new variable
   
   ##this is rather simple, just correlation for each person
-  ##no need to iterate over items like other metrics
+
   while (x<persons) {
     x<-(x+1);
+    ##to move to broader case need to sample from scale means
     odd<-c(Data1[x,oddItems]);
     even<-c(Data1[x,evenItems]);
     vOdd<-unlist(odd);
