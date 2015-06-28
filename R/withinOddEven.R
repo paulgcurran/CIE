@@ -16,7 +16,7 @@
 
 ##creating file for later use of higher level commands
 
-withinOddEven<-function(Data1){
+withinOddEven<-function(Data1,scales){
   x<-exists("Data2")
   if(x==FALSE){
     Data2<-Data1
@@ -24,27 +24,32 @@ withinOddEven<-function(Data1){
   rm(x)
   ##set number of items from the dimensions of the input file
   dim<-dim(Data1)
-  nItems<-dim[2]
+  nItems<-dim[2]/scales
   #nItems<-50
   
-  ##if odd number of items, disregard the final one
-  ##not sure if this should be a user choice, or just default
-  ##what is currently done in practice?
-  if (nItems%%2==1) {
-    nItems<-nItems-1
-  }
   
   ##building sequences of numbers
   ##currently assumes situation where each scale is assessed 
     ##by two adjacent items
   ##need to program initial input so that user can provide each scale
   
+  #need to build out matrix based on number of scales in use 
+  #borrow code from longstring all
+  
+  for (s in 1:scales) {
   oddItems<-seq(1,nItems,2)
   evenItems<-seq(2,nItems,2)
+  
+  #create a loop that fills based on place in larger for loop
+  
+  }
+  
+  }
   ##building constraints for while loop
   #dim<-dim(Data1)
   persons<-dim[1]
   x<-0
+  
   ##currently does not build scale scores, but needs to
     ##works at moment only on two item scales
   
