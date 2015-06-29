@@ -21,68 +21,75 @@ withinOddEven<-function(Data1,scales){
   if(x==FALSE){
     Data2<-Data1
   }
+  
+  
   rm(x)
   ##set number of items from the dimensions of the input file
-  dim<-dim(Data1)
-  nItems<-dim[2]/scales
-  #nItems<-50
+  dimen<-dim(Data1)
+  nItems<-dimen[2]
+  subscales<-nItems/scales
+  subscalesH<-subscales/2
   
-  
-  ##building sequences of numbers
-  ##currently assumes situation where each scale is assessed 
-    ##by two adjacent items
-  ##need to program initial input so that user can provide each scale
-  
-  #need to build out matrix based on number of scales in use 
-  #borrow code from longstring all
-  
-  for (s in 1:scales) {
-  oddItems<-seq(1,nItems,2)
-  evenItems<-seq(2,nItems,2)
-  
-  #create a loop that fills based on place in larger for loop
-  
+  if (nItems%%scales!=0) {
+    print ("You have uneven scales.")
   }
   
+  if (subscalesH%%1!=0) {
+    print ("You have a odd number of items in subscales.")
   }
+  
+  ##variable 'scales' will assume equal length sequential
+  
+  
+  
+  
   ##building constraints for while loop
   #dim<-dim(Data1)
-  persons<-dim[1]
+  persons<-dimen[1]
   x<-0
+
   
-  ##currently does not build scale scores, but needs to
-    ##works at moment only on two item scales
-  
-  ##need to write code to populate vectors of scale means
   
   ##creating empty variable to be filled by while loop
-  Data2$coefOddEven<-NULL
+  coefOddEven<-NULL
   
-  ##iteratively computing calculation within each person, populating new variable
-  
-  ##this is rather simple, just correlation for each person
-
-  while (x<persons) {
-    x<-(x+1);
-    ##to move to broader case need to sample from scale means
-    odd<-c(Data1[x,oddItems]);
-    even<-c(Data1[x,evenItems]);
-    vOdd<-unlist(odd);
-    vEven<-unlist(even);
-    #Data2$coefOddEven[x]<<-cor(vOdd,vEven,use="pairwise.complete.obs");
-    Data2$coefOddEven[x]<-cor(vOdd,vEven,use="pairwise.complete.obs");
-    rm(odd,even,vOdd,vEven)
+  for (x in 1:persons) {
+    corMatrix<-NULL
+    corMatrix<-matrix(nrow=scales,ncol=2)
+    j<-0
+    
+    for (s in 1:scales) {
+      j<-((s-1)*subscales)+1
+      k<-j+1
+      t<-(j+subscales-1)
+      odd<-NULL
+      even<-NULL
+      oddItems<-seq(j,t,2)
+      evenItems<-seq(k,t,2)
+      odd<-data.frame(Data1[x,oddItems])
+      even<-data.frame(Data1[x,evenItems])
+      corMatrix[x,1]<-mean(unlist(odd),na.rm = TRUE)
+      corMatrix[x,2]<-mean(unlist(even),na.rm = TRUE)
+      rm(j,k,t,odd,even,oddItems,evenItems)
+    }
+    vOdd<-corMatrix[1,]
+    vEven<-corMatrix[2,]
+    
+    coefOddEven[x]<-cor(vOdd,vEven,use="pairwise.complete.obs");
+    rm(vOdd,vEven)
   }
+  
+  
   
   ##older code for displaying variables
   # display data file with appended data
   #Data2
   # generate basic stats of person total correlations
-  summary(Data2$coefOddEven)
+  summary(coefOddEven)
   # generate histogram of calculated values
-  hist(Data2$coefOddEven, breaks=50, col="blue")
+  hist(coefOddEven, breaks=50, col="blue")
   
-  coefOddEven<-Data2$coefOddEven
+  #coefOddEven<-Data2$coefOddEven
   ##returns values for user to store
   return(coefOddEven)
   
