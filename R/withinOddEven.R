@@ -56,17 +56,19 @@ withinOddEven<-function(Data1,scales){
   for (x in 1:persons) {
     corMatrix<-NULL
     corMatrix<-matrix(nrow=scales,ncol=2)
-    j<-0
+    j<-NULL
+    k<-NULL
+    t<-NULL
     
     for (s in 1:scales) {
       j<-((s-1)*subscales)+1
       k<-j+1
-      t<-(j+subscales-1)
+      t<-((j*subscales)-1)
       odd<-NULL
       even<-NULL
       oddItems<-seq(j,t,2)
       evenItems<-seq(k,t,2)
-      odd<-data.frame(Data1[x,oddItems])
+      odd<-(Data1[x,oddItems])
       even<-data.frame(Data1[x,evenItems])
       corMatrix[x,1]<-mean(unlist(odd),na.rm = TRUE)
       corMatrix[x,2]<-mean(unlist(even),na.rm = TRUE)
