@@ -10,7 +10,7 @@
 
 # function 7 - resampled internal reliability
 
-resampIntRel<-function(Data1,scales){
+resampIntRel<-function(Data1,scales,iter=100){
   x<-exists("Data2")
   if(x==FALSE){
     Data2<<-Data1
@@ -48,7 +48,7 @@ resampIntRel<-function(Data1,scales){
   resampIntRel<-NULL
   
   for (x in 1:persons) {
-    r<-100
+    r<-iter
     values<-matrix(nrow=r)
     
     for (z in 1:r){
@@ -79,7 +79,7 @@ resampIntRel<-function(Data1,scales){
       
       values[z]<-cor(vfirst,vsecond,use="pairwise.complete.obs");
       rm(vfirst,vsecond)
-       
+      
     }
     
     resampIntRel[x]<-mean(values,na.rm=TRUE)
@@ -88,17 +88,17 @@ resampIntRel<-function(Data1,scales){
   
   
   
-return(resampIntRel)
+  return(resampIntRel)
   
-# display data file with appended data
-#Data2
-# generate basic stats of person total correlations
-summary(resampIntRel)
-# generate histogram of calculated values
-hist(resampIntRel, breaks=50, col="blue")
-
-
-rm(r,nItems,persons)
-
-
+  # display data file with appended data
+  #Data2
+  # generate basic stats of person total correlations
+  summary(resampIntRel)
+  # generate histogram of calculated values
+  hist(resampIntRel, breaks=50, col="blue")
+  
+  
+  rm(r,nItems,persons)
+  
+  
 }
