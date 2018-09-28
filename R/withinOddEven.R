@@ -16,12 +16,11 @@
 
 ##creating file for later use of higher level commands
 
-withinOddEven<-function(Data1,scales){
+withinOddEven<-function(Data1,scales=1){
   x<-exists("Data2")
   if(x==FALSE){
     Data2<-Data1
   }
-  
   
   rm(x)
   ##set number of items from the dimensions of the input file
@@ -40,15 +39,10 @@ withinOddEven<-function(Data1,scales){
   
   ##variable 'scales' will assume equal length sequential
   
-  
-  
-  
   ##building constraints for while loop
   #dim<-dim(Data1)
   persons<-dimen[1]
   x<-0
-
-  
   
   ##creating empty variable to be filled by while loop
   coefOddEven<-NULL
@@ -97,6 +91,5 @@ withinOddEven<-function(Data1,scales){
   
   ##cleaning remaining variables
   rm(dim,evenItems,nItems,oddItems,x,persons)
-  
   
 }
