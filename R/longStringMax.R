@@ -103,7 +103,6 @@ longStringMax<-function(Data1,scoreReport="counts"){
     return(vals)  
   }    
   
-  
   ##cleaning remaining variables
   rm(dim,k,length,nItems,nItemsR,persons,response,x)
   
