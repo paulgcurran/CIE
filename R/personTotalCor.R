@@ -61,7 +61,7 @@ personTotalCor<-function(Data1){
   rm(nItems,nPeople,sumData1)
   # transpose original item by person matrix
   #tData1<-t(Data1)
-    # run model to generate item total correlations on transposed matrix
+  # run model to generate item total correlations on transposed matrix
   #modelITCor<-psychometric::item.exam(tData1)
   # pull out item total correlations from model estimates
   #personTotal<-modelITCor$Item.Tot.woi
@@ -79,7 +79,3 @@ personTotalCor<-function(Data1){
   #print(Data2)
   
 }
-
-
-
-
