@@ -16,7 +16,7 @@
 
 ##creating file for combination of metrics
 
-psychometricSyn<-function(Data1){
+psychometricSyn<-function(Data1,nPairs=5,minCor=.5){
   x<-exists("Data2")
   if(x==FALSE){
     Data2<-Data1
@@ -28,13 +28,13 @@ psychometricSyn<-function(Data1){
   nItems<-dim[2]
   #nItems<-50
   
-  ##need to pick how many pairs of antonyms used (default to top 5)
+  ##need to pick how many pairs of synonyms used (default to top 5)
   ####need to modify this to allow for user inputs
-  nPairs<-5
+  #nPairs<-numPairs
   
   ##need to set minimum value for selected correlations (default to .5)
   ###need to modify this to allow for user inputs
-  minCor<-.5
+  #minCor<-.5
   
   ##finding correlations
   cors<-cor(Data1,use="pairwise.complete.obs")
@@ -106,5 +106,5 @@ psychometricSyn<-function(Data1){
   ##cleaning remaining variables
   rm(cors,columnPlaceVect,corsOrder,dim,j,minCor,nItems,nPairs,rowPlaceVect,topCors,topPairs,x,persons)
   
-
+  
 }
